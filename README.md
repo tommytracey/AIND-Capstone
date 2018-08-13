@@ -44,12 +44,38 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 
 For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
 
-### Preprocessing
-_UNDER CONSTRUCTION: final version coming soon_
+We use Keras with TensorFlow backend for this project. I prefer using Keras on top of TensorFlow because the syntax is simpler, which makes building the model layers more intuitive. However, there is a trade-off with Keras as you lose the ability to do fine-grained customizations. But this won't affect the models we're building in this project.  
 
-- cleaning
-- tokenization
-- padding
+### Preprocessing
+
+##### Load & Examine Data
+Here is a sample of the data. The inputs are sentences in English; the outputs are the corresponding translation in French.
+
+<img src="images/training-sample.png" width="110%" align="top-left" alt="" title="Data Sample" />
+
+##### &nbsp;
+
+When we run a word count, we can see that the vocabulary for the dataset is quite small. This was by design for this project, so that the models could be trained in a reasonable amount of time.
+
+<img src="images/vocab.png" width="90%" align="top-left" alt="" title="Word count" />
+
+##### Cleaning
+No additional cleaning needs to be done. The data has already been converted to lowercase and split so that there are spaces between all words and punctuation.
+
+_Note:_ For other NLP projects you may need to perform additional steps such as: remove HTML tags, remove stop words, remove punctuation or convert to tag representations, label the parts of speech, or perform entity extraction.  
+
+##### Tokenization
+Next we need to tokenize the data, that is, to convert the text to numerical values. This allows the neural network to perform operations on the input data. For this project, each word and punctuation mark will be given a unique ID. (In other NLP projects, it might make sense to assign character-level IDs.)
+
+When we run the tokenizer, it creates a word index, which we then use to convert each sentence to a vector.
+
+<img src="images/tokenizer.png" width="120%" align="top-left" alt="" title="Tokenizer output" />
+
+##### Padding
+When we feed our sequences of word IDs into the model, each sequence needs to be the same length. To achieve this, padding is added to any sequence that is shorter than the max length (i.e. shorter than the longest sentence).
+
+<img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
+
 
 ### Modeling
 _UNDER CONSTRUCTION: final version coming soon_
