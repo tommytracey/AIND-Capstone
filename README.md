@@ -45,11 +45,14 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
 
 ### Preprocessing
+_UNDER CONSTRUCTION: final version coming soon_
+
 - cleaning
 - tokenization
 - padding
 
 ### Modeling
+_UNDER CONSTRUCTION: final version coming soon_
 
 Here we evaluate different RNN architectures:
   - simple
@@ -63,12 +66,15 @@ Here we evaluate different RNN architectures:
 ##### &nbsp;
 
 ## Results
-- _coming soon_
+_UNDER CONSTRUCTION: final version coming soon_
+
 
 
 ##### &nbsp;
 
 ## Future Improvements
+_UNDER CONSTRUCTION: final version coming soon_
+
 - do proper data split (train, validation, test)
 - LSTM + attention
 - Residual layers (Google paper)
