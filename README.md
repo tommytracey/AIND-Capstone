@@ -51,13 +51,13 @@ We use Keras with TensorFlow backend for this project. I prefer using Keras on t
 ##### Load & Examine Data
 Here is a sample of the data. The inputs are sentences in English; the outputs are the corresponding translation in French.
 
-<img src="images/training-sample.png" width="110%" align="top-left" alt="" title="Data Sample" />
+> <img src="images/training-sample.png" width="100%" align="top-left" alt="" title="Data Sample" />
 
 ##### &nbsp;
 
 When we run a word count, we can see that the vocabulary for the dataset is quite small. This was by design for this project, so that the models could be trained in a reasonable amount of time.
 
-<img src="images/vocab.png" width="90%" align="top-left" alt="" title="Word count" />
+> <img src="images/vocab.png" width="70%" align="top-left" alt="" title="Word count" />
 
 ##### Cleaning
 No additional cleaning needs to be done. The data has already been converted to lowercase and split so that there are spaces between all words and punctuation.
@@ -69,12 +69,12 @@ Next we need to tokenize the data, that is, to convert the text to numerical val
 
 When we run the tokenizer, it creates a word index, which we then use to convert each sentence to a vector.
 
-<img src="images/tokenizer.png" width="120%" align="top-left" alt="" title="Tokenizer output" />
+> <img src="images/tokenizer.png" width="100%" align="top-left" alt="" title="Tokenizer output" />
 
 ##### Padding
 When we feed our sequences of word IDs into the model, each sequence needs to be the same length. To achieve this, padding is added to any sequence that is shorter than the max length (i.e. shorter than the longest sentence).
 
-<img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
+> <img src="images/padding.png" width="40%" align="top-left" alt="" title="Tokenizer output" />
 
 
 ### Modeling
