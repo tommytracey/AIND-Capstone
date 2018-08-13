@@ -35,16 +35,29 @@ However, while machine translation has made a ton of progress, it's still not pe
 ##### &nbsp;
 
 ## Approach
-- _in progress_
+Below is a summary of the various preprocessing and modeling steps. The high-level steps include:
 
-Here we test different RNN architectures:
+1. Preprocessing: load and examine data, cleaning, tokenization, padding
+1. Modeling: build, train, and test the model
+1. Prediction: generate specific translations of English to French, and compare the output translations to the ground truth translations
+1. Iteration: iterate on the model, experimenting with different architectures
+
+For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
+
+### Preprocessing
+- cleaning
+- tokenization
+- padding
+
+### Modeling
+
+Here we evaluate different RNN architectures:
   - simple
   - embeddings
   - encoder-decoder
+  - bidirectional (backward and forward context)
   - GRU
-  - bidirectional
-  - LSTM (not tested)
-  - attention (not tested)
+  - LSTM (not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
 
 
 ##### &nbsp;
@@ -56,12 +69,16 @@ Here we test different RNN architectures:
 ##### &nbsp;
 
 ## Future Improvements
-- train on different text corpuses
+- do proper data split (train, validation, test)
 - LSTM + attention
+- Residual layers (Google paper)
 - Embedding Language Model (ELMo)
+- Transformer model
+- train on different text corpuses
 
 ##### &nbsp;
 ##### &nbsp;
+
 ---
 
 # Project Starter Code
