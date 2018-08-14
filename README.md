@@ -37,7 +37,7 @@ However, while machine translation has made a ton of progress, it's still not pe
 ## Approach
 To translate a corpus of English text to French, we need to build a recurrent neural network (RNN). Before diving into the implementation, let's first build some intuition of RNNs and why they're useful for NLP tasks.
 
-##### RNN Overview
+#### RNN Overview
 <img src="images/rnn-simple-folded.png" height="20%" align="right" alt="" title="Simple RNN - Folded View" />
 RNNs are designed to take sequences of text as inputs or return sequences of text as outputs, or both. They're called recurrent because, the network's hidden layers have a loop in which the output from one time step becomes an input at the next time step. This recurrence allows contextual information to flow through the network. It serves as a form of memory which can be applied to network operations at the current time step.
 
@@ -61,7 +61,7 @@ Depending on the use-case, you'll want to setup your RNN to handle inputs and ou
 
 ##### &nbsp;
 
-##### Building the Pipeline
+#### Building the Pipeline
 Below is a summary of the various preprocessing and modeling steps. The high-level steps include:
 
 1. Preprocessing: load and examine data, cleaning, tokenization, padding
@@ -71,14 +71,14 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 
 For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
 
-##### Toolset
+#### Toolset
 We use Keras with TensorFlow backend for this project. I prefer using Keras on top of TensorFlow because the syntax is simpler, which makes building the model layers more intuitive. However, there is a trade-off with Keras as you lose the ability to do fine-grained customizations. But this won't affect the models we're building in this project.  
 
 ##### &nbsp;
 
 ### Preprocessing
 
-##### Load & Examine Data
+#### Load & Examine Data
 Here is a sample of the data. The inputs are sentences in English; the outputs are the corresponding translation in French.
 
 > <img src="images/training-sample.png" width="100%" align="top-left" alt="" title="Data Sample" />
@@ -89,19 +89,19 @@ When we run a word count, we can see that the vocabulary for the dataset is quit
 
 > <img src="images/vocab.png" width="75%" align="top-left" alt="" title="Word count" />
 
-##### Cleaning
+#### Cleaning
 No additional cleaning needs to be done. The data has already been converted to lowercase and split so that there are spaces between all words and punctuation.
 
 _Note:_ For other NLP projects you may need to perform additional steps such as: remove HTML tags, remove stop words, remove punctuation or convert to tag representations, label the parts of speech, or perform entity extraction.  
 
-##### Tokenization
+#### Tokenization
 Next we need to tokenize the data, that is, to convert the text to numerical values. This allows the neural network to perform operations on the input data. For this project, each word and punctuation mark will be given a unique ID. (In other NLP projects, it might make sense to assign character-level IDs.)
 
 When we run the tokenizer, it creates a word index, which we then use to convert each sentence to a vector.
 
 > <img src="images/tokenizer.png" width="100%" align="top-left" alt="" title="Tokenizer output" />
 
-##### Padding
+#### Padding
 When we feed our sequences of word IDs into the model, each sequence needs to be the same length. To achieve this, padding is added to any sequence that is shorter than the max length (i.e. shorter than the longest sentence).
 
 > <img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
