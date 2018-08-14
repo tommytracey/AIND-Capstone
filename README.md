@@ -35,6 +35,33 @@ However, while machine translation has made a ton of progress, it's still not pe
 ##### &nbsp;
 
 ## Approach
+To translate a corpus of English text to French, we need to build a recurrent neural network (RNN). Before diving into the implementation, let's first build some intuition of RNNs and why they're useful for NLP tasks.
+
+##### RNN Overview
+<img src="images/rnn-simple-folded.png" height="20%" align="right" alt="" title="Simple RNN - Folded View" />
+RNNs are designed to take sequences of text as inputs or return sequences of text as outputs, or both. They're called recurrent because, the network's hidden layers have a loop in which the output from one time step becomes an input at the next time step. This recurrence allows contextual information to flow through the network. It serves as a form of memory which can be applied to network operations at the current time step.
+
+This is analogous to how we read. As you're reading this post, you're storing important pieces of information from previous words and sentences and using this context to understand each new word.
+
+Other types of neural networks can't do this. Imagine you're using a convolutional neural network (CNN) to perform object detection in a movie. Currently, there's no way for information from objects detected in previous scenes to inform the model's detection of objects in the current scene. For example, if a courtroom and judge were detected in a previous scene, that information could help correctly classify the judge's gavel in the current scene (instead of misclassifying it as a hammer or mallet).
+
+
+
+Depending on the use-case, you'll want to setup your RNN to handle inputs and outputs differently.
+
+<img src="images/rnn-sequence-types.png" width="100%" align="top-left" alt="" title="RNN Sequence Types" />
+<Andrej Karpathy diagram of different sequence types>
+
+> Each rectangle is a vector and arrows represent functions (e.g. matrix multiply). Input vectors are in red, output vectors are in blue and green vectors hold the RNN's state (more on this soon).
+
+> From left to right: (1) Vanilla mode of processing without RNN, from fixed-sized input to fixed-sized output (e.g. image classification). (2) Sequence output (e.g. image captioning takes an image and outputs a sentence of words). (3) Sequence input (e.g. sentiment analysis where a given sentence is classified as expressing positive or negative sentiment). (4) Sequence input and sequence output (e.g. Machine Translation: an RNN reads a sentence in English and then outputs a sentence in French). (5) Synced sequence input and output (e.g. video classification where we wish to label each frame of the video). Notice that in every case are no pre-specified constraints on the lengths sequences because the recurrent transformation (green) is fixed and can be applied as many times as we like.
+
+*Image and quote source: [karpathy.github.io](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)*
+
+
+##### &nbsp;
+
+##### Building the Pipeline
 Below is a summary of the various preprocessing and modeling steps. The high-level steps include:
 
 1. Preprocessing: load and examine data, cleaning, tokenization, padding
@@ -44,7 +71,10 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 
 For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
 
+##### Toolset
 We use Keras with TensorFlow backend for this project. I prefer using Keras on top of TensorFlow because the syntax is simpler, which makes building the model layers more intuitive. However, there is a trade-off with Keras as you lose the ability to do fine-grained customizations. But this won't affect the models we're building in this project.  
+
+##### &nbsp;
 
 ### Preprocessing
 
@@ -57,7 +87,7 @@ Here is a sample of the data. The inputs are sentences in English; the outputs a
 
 When we run a word count, we can see that the vocabulary for the dataset is quite small. This was by design for this project, so that the models could be trained in a reasonable amount of time.
 
-> <img src="images/vocab.png" width="70%" align="top-left" alt="" title="Word count" />
+> <img src="images/vocab.png" width="75%" align="top-left" alt="" title="Word count" />
 
 ##### Cleaning
 No additional cleaning needs to be done. The data has already been converted to lowercase and split so that there are spaces between all words and punctuation.
@@ -74,7 +104,7 @@ When we run the tokenizer, it creates a word index, which we then use to convert
 ##### Padding
 When we feed our sequences of word IDs into the model, each sequence needs to be the same length. To achieve this, padding is added to any sequence that is shorter than the max length (i.e. shorter than the longest sentence).
 
-> <img src="images/padding.png" width="40%" align="top-left" alt="" title="Tokenizer output" />
+> <img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
 
 
 ### Modeling
