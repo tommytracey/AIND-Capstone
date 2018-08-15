@@ -109,9 +109,11 @@ When we feed our sequences of word IDs into the model, each sequence needs to be
 #### One-hot Encoding (not used)
 In this project, our input sequences will be a series of integers representing the series of words (as seen above). However, sometimes an additional step is perform to convert each word integer from the input sequence into a one-hot encoded vector. We don't use one-hot encoding (OHE) in this project, but you'll see it in some of the diagrams, so I don't want you to get confused.  
 
+<img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
+
 One of the drawbacks of OHE is that the vectors can be very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/), _not_ including various proper nouns, words tenses, and slang. If this was your vocabulary, your OHE vector would include only one true value surrounded by 171,999 zeros!
 
-<img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
+
 
 ##### &nbsp;
 
