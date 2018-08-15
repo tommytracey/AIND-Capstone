@@ -138,7 +138,7 @@ First, let's breakdown the architecture of a simple RNN.
 #### Gated recurrent unit (GRU)
 ##### &nbsp;
 
-<img src="images/gru.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+<img src="images/gru.png" width="70%" align="middle" alt="" title="Gated Recurrent Unit (GRU)" />
 
 ##### &nbsp;
 ##### &nbsp;
@@ -147,7 +147,7 @@ First, let's breakdown the architecture of a simple RNN.
 #### Bidirectional Layer
 - backward and forward context
 
-<img src="images/bidirectional.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+<img src="images/bidirectional.png" width="70%" align="top-left" alt="" title="Bidirectional Layer" />
 
 ##### &nbsp;
 ##### &nbsp;
@@ -156,14 +156,14 @@ First, let's breakdown the architecture of a simple RNN.
 #### LSTM
 - Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
 
-<img src="images/lstm-gates.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+<img src="images/lstm-gates.png" width="70%" align="middle" alt="" title="LSTM cell" />
 
 ##### &nbsp;
 ##### &nbsp;
 
 #### Attention (not tested)
 
-<img src="images/attention.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+<img src="images/attention.png" width="70%" align="middle" alt="" title="Encoder Decoder" />
 
 ##### &nbsp;
 ##### &nbsp;
