@@ -111,9 +111,9 @@ In this project, our input sequences will be a series of integers representing t
 
 One of the drawbacks of OHE is that the vectors can be very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/), _not_ including various proper nouns, words tenses, and slang. If this was your vocabulary, your OHE vector would include only one true value surrounded by 171,999 zeros!
 
-##### &nbsp;
+<img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
 
-<img src="images/RNN-architecture.png" width="50%" align="right" alt="" title="RNN architecture" />
+##### &nbsp;
 
 ## Modeling
 _UNDER CONSTRUCTION: final version coming soon_
