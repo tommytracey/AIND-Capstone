@@ -76,7 +76,7 @@ We use Keras with TensorFlow backend for this project. I prefer using Keras on t
 
 ##### &nbsp;
 
-### Preprocessing
+## Preprocessing
 
 #### Load & Examine Data
 Here is a sample of the data. The inputs are sentences in English; the outputs are the corresponding translation in French.
@@ -106,20 +106,70 @@ When we feed our sequences of word IDs into the model, each sequence needs to be
 
 > <img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
 
+##### &nbsp;
 
-### Modeling
+## Modeling
 _UNDER CONSTRUCTION: final version coming soon_
 
-Here we evaluate different RNN architectures:
-  - simple
-  - embeddings
-  - encoder-decoder
-  - bidirectional (backward and forward context)
-  - GRU
-  - LSTM (not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
+<img src="images/RNN-architecture.png" width="50%" align="right" alt="" title="RNN architecture" />
+
+First, let's breakdown the architecture of a simple RNN.
+
+#### Embeddings
+- transfer learning
+
+#### Encoder & Decoder
+- encoder = recurrent layers
+- decoder = dense layers
+- time steps
 
 
 ##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
+<img src="images/encoder-decoder.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
+#### Gated recurrent unit (GRU)
+##### &nbsp;
+
+<img src="images/gru.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
+#### Bidirectional Layer
+- backward and forward context
+
+<img src="images/bidirectional.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
+#### LSTM
+- Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
+
+<img src="images/lstm-gates.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+
+#### Attention (not tested)
+
+<img src="images/attention.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
+
 
 ## Results
 _UNDER CONSTRUCTION: final version coming soon_
