@@ -111,8 +111,7 @@ In this project, our input sequences will be a series of integers representing t
 
 <img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
 
-One of the drawbacks of OHE is that the vectors can be very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/), _not_ including various proper nouns, words tenses, and slang. If this was your vocabulary, your OHE vector would include only one true value surrounded by 171,999 zeros!
-
+One of the drawbacks of OHE is that the vectors can be very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/), _not_ including various proper nouns, words tenses, and slang. If this was your vocabulary, your OHE vector would include one true value and 171,999 zeros!
 
 
 ##### &nbsp;
@@ -120,13 +119,20 @@ One of the drawbacks of OHE is that the vectors can be very long and sparse. The
 ## Modeling
 _UNDER CONSTRUCTION: final version coming soon_
 
-First, let's breakdown the architecture of a simple RNN.
+First, let's breakdown the architecture of a RNN at a high level. Referring to the diagram above, there are a few parts of the model we to be aware of:
+
+1. **Inputs** &mdash; Input sequences are fed into the model with one word for every time step. Each word in encoded as a unique integer or one-hot encoded vector that maps to the English dataset vocabulary.
+1. **Embedding Layers** &mdash; Embeddings are used to convert each word to a vector. The size of the vector depends on the complexity of the vocabulary.
+1. **Recurrent Layers (aka Encoder)** &mdash; This is where the context from word vectors in previous time steps is applied to the current word vector.
+1. **Dense Layers (aka Decoder)** &mdash; These are typical fully connected layers used to decode the encoded input into the correct translation sequence.
+1. **Outputs** &mdash; The outputs are returned as a sequence of integers or one-hot encoded vectors which can then be mapped to the French dataset vocabulary.
 
 #### Embeddings
-Embeddings are a form of transfer learning which projects each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are along those dimensions. And, the vectors between words often represents useful relationships, such as gender, verb tense, or even geo-political relationships.
+Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represents useful relationships, such as gender, verb tense, or even geo-political relationships.
 
 <img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
+Training embeddings on a large dataset from scratch requires a huge amount of data and computation. So, instead of doing it yourself, you'd normally use a pre-trained embeddings package such as [GloVe](https://nlp.stanford.edu/projects/glove/) or [word2vec](https://mubaris.com/2017/12/14/word2vec/). When used this way, embeddings are a form of transfer learning. However, since our dataset has a small vocabulary and little syntactic variation, we'll use Keras to train the embeddings ourselves.
 
 #### Encoder & Decoder
 - encoder = recurrent layers
