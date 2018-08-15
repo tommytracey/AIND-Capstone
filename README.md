@@ -106,17 +106,25 @@ When we feed our sequences of word IDs into the model, each sequence needs to be
 
 > <img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
 
+#### One-hot Encoding (not used)
+In this project, our input sequences will be a series of integers representing the series of words (as seen above). However, sometimes an additional step is perform to convert each word integer from the input sequence into a one-hot encoded vector. We don't use one-hot encoding (OHE) in this project, but you'll see it in some of the diagrams, so I don't want you to get confused.  
+
+One of the drawbacks of OHE is that the vectors can be very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/), _not_ including various proper nouns, words tenses, and slang. If this was your vocabulary, your OHE vector would include only one true value surrounded by 171,999 zeros!
+
 ##### &nbsp;
+
+<img src="images/RNN-architecture.png" width="50%" align="right" alt="" title="RNN architecture" />
 
 ## Modeling
 _UNDER CONSTRUCTION: final version coming soon_
 
-<img src="images/RNN-architecture.png" width="50%" align="right" alt="" title="RNN architecture" />
-
 First, let's breakdown the architecture of a simple RNN.
 
 #### Embeddings
-- transfer learning
+Embeddings are a form of transfer learning which projects each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are along those dimensions. And, the vectors between words often represents useful relationships, such as gender, verb tense, or even geo-political relationships.
+
+<img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
+
 
 #### Encoder & Decoder
 - encoder = recurrent layers
@@ -138,7 +146,7 @@ First, let's breakdown the architecture of a simple RNN.
 #### Gated recurrent unit (GRU)
 ##### &nbsp;
 
-<img src="images/gru.png" width="70%" align="middle" alt="" title="Gated Recurrent Unit (GRU)" />
+<img src="images/gru.png" width="70%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
 ##### &nbsp;
 ##### &nbsp;
@@ -147,7 +155,7 @@ First, let's breakdown the architecture of a simple RNN.
 #### Bidirectional Layer
 - backward and forward context
 
-<img src="images/bidirectional.png" width="70%" align="top-left" alt="" title="Bidirectional Layer" />
+<img src="images/bidirectional.png" width="70%" align="center" alt="" title="Bidirectional Layer" />
 
 ##### &nbsp;
 ##### &nbsp;
@@ -156,14 +164,14 @@ First, let's breakdown the architecture of a simple RNN.
 #### LSTM
 - Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
 
-<img src="images/lstm-gates.png" width="70%" align="middle" alt="" title="LSTM cell" />
+<img src="images/lstm-gates.png" width="70%" align="center" alt="" title="LSTM cell" />
 
 ##### &nbsp;
 ##### &nbsp;
 
 #### Attention (not tested)
 
-<img src="images/attention.png" width="70%" align="middle" alt="" title="Encoder Decoder" />
+<img src="images/attention.png" width="70%" align="center" alt="" title="Encoder Decoder" />
 
 ##### &nbsp;
 ##### &nbsp;
