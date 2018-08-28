@@ -113,11 +113,11 @@ In this project, our input sequences will be a vector containing a series of int
 
 <img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
 
-One of the advantages of OHE is efficiency since it can [run at a faster clock rate than other encodings](https://en.wikipedia.org/wiki/One-hot#cite_note-2). The other advantage is that OHE better represents categorical data where there is no ordinal relationship between different values. For example, let's say we're classifying animals as either a mammal, reptile, fish, or bird. If we encode them as 1, 2, 3, 4 respectively, our model may assume there is a natural ordering between them, which could lead to poor results. However, if we apply one-hot encoding to this integer representation, changing them to binary representations&mdash;1000, 0100, 0010, 0001 respectively&mdash;then no ordinal relationship can be inferred by the model.
+One of the advantages of OHE is efficiency since it can [run at a faster clock rate than other encodings](https://en.wikipedia.org/wiki/One-hot#cite_note-2). The other advantage is that OHE better represents categorical data where there is no ordinal relationship between different values. For example, let's say we're classifying animals as either a mammal, reptile, fish, or bird. If we encode them as 1, 2, 3, 4 respectively, our model may assume there is a natural ordering between them, which there isn't. It's not useful to structure our data such that mammal comes before reptile and so forth. This can mislead our model and cause poor results. However, if we then apply one-hot encoding to these integers, changing them to binary representations&mdash;1000, 0100, 0010, 0001 respectively&mdash;then no ordinal relationship can be inferred by the model.
 
-But, one of the drawbacks of OHE is that the vectors can get very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/). But, if we include various proper nouns, words tenses, and slang there could be over 10 million words in each language. So, if this was the vocabulary you used, the OHE vector for each word would include one positive value (1) surrounded by 9,999,999 zeros!
+But, one of the drawbacks of OHE is that the vectors can get very long and sparse. The length of the vector is determined by the vocabulary, i.e. the number of unique words in your text corpus. As we saw in the data examination step above, our vocabulary for this project is very small&mdash;only 227 English words and 355 French words. By comparison, the [Oxford English Dictionary has 172,000 words](https://en.oxforddictionaries.com/explore/how-many-words-are-there-in-the-english-language/). But, if we include various proper nouns, words tenses, and slang there could be millions of words in each language. For example, [Google's word2vec](http://mccormickml.com/2016/04/12/googles-pretrained-word2vec-model-in-python/) is trained on a vocabulary of 3 million unique words. If we used OHE on this vocabulary, the vector for each word would include one positive value (1) surrounded by 2,999,999 zeros!
 
-And, since we're using embeddings (in the next step) to further encode the word representations, we don't need to bother with OHE. The efficiency gains aren't worth it on a data set this small.  
+And, since we're using embeddings (in the next step) to further encode the word representations, we don't need to bother with OHE. Any efficiency gains aren't worth it on a data set this small.  
 
 
 ##### &nbsp;
@@ -133,12 +133,16 @@ First, let's breakdown the architecture of a RNN at a high level. Referring to t
 1. **Dense Layers (Decoder)** &mdash; These are typical fully connected layers used to decode the encoded input into the correct translation sequence.
 1. **Outputs** &mdash; The outputs are returned as a sequence of integers or one-hot encoded vectors which can then be mapped to the French dataset vocabulary.
 
+##### &nbsp;
+
 #### Embeddings
 Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represents useful relationships, such as gender, verb tense, or even geo-political relationships.
 
 <img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
 Training embeddings on a large dataset from scratch requires a huge amount of data and computation. So, instead of doing it yourself, you'd normally use a pre-trained embeddings package such as [GloVe](https://nlp.stanford.edu/projects/glove/) or [word2vec](https://mubaris.com/2017/12/14/word2vec/). When used this way, embeddings are a form of transfer learning. However, since our dataset has a small vocabulary and little syntactic variation, we'll use Keras to train the embeddings ourselves.
+
+##### &nbsp;
 
 #### Encoder & Decoder
 - encoder = recurrent layers
