@@ -136,38 +136,39 @@ First, let's breakdown the architecture of a RNN at a high level. Referring to t
 ##### &nbsp;
 
 #### Embeddings
-Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represents useful relationships, such as gender, verb tense, or even geo-political relationships.
+Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represent useful relationships, such as gender, verb tense, or even geo-political relationships.
 
 <img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
-Training embeddings on a large dataset from scratch requires a huge amount of data and computation. So, instead of doing it yourself, you'd normally use a pre-trained embeddings package such as [GloVe](https://nlp.stanford.edu/projects/glove/) or [word2vec](https://mubaris.com/2017/12/14/word2vec/). When used this way, embeddings are a form of transfer learning. However, since our dataset has a small vocabulary and little syntactic variation, we'll use Keras to train the embeddings ourselves.
+Training embeddings on a large dataset from scratch requires a huge amount of data and computation. So, instead of doing it ourselves, we'd normally use a pre-trained embeddings package such as [GloVe](https://nlp.stanford.edu/projects/glove/) or [word2vec](https://mubaris.com/2017/12/14/word2vec/). When used this way, embeddings are a form of transfer learning. However, since our dataset for this project has a small vocabulary and little syntactic variation, we'll use Keras to train the embeddings ourselves.
 
 ##### &nbsp;
 
 #### Encoder & Decoder
-- encoder = recurrent layers
-- decoder = dense layers
-- time steps
-
+Our sequence-to-sequence model links two recurrent networks: an encoder and a decoder. The encoder summarizes the input into a context variable, also called a state. This context is then decoded and the output sequence is generated.
 
 ##### &nbsp;
-##### &nbsp;
-##### &nbsp;
-##### &nbsp;
 
-<img src="images/encoder-decoder.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+<img src="images/encoder-decoder-context.png" width="60%" align="top-left" alt="" title="Encoder Decoder" />
 
-##### &nbsp;
-##### &nbsp;
-##### &nbsp;
-
-#### Gated recurrent unit (GRU)
-##### &nbsp;
-
-<img src="images/gru.png" width="70%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
+_Image credit: [Udacity](https://classroom.udacity.com/nanodegrees/nd101/parts/4f636f4e-f9e8-4d52-931f-a49a0c26b710/modules/c1558ffb-9afd-48fa-bf12-b8f29dcb18b0/lessons/43ccf91e-7055-4833-8acc-0e2cf77696e8/concepts/be468484-4bd5-4fb0-82d6-5f5697af07da)_
 
 ##### &nbsp;
+
+Since both the encoder and decoder are recurrent, they have loops which process each part of the sequence at different time steps. To picture this, it's best to unroll the network so we can see what's happening at each time step.
+
+For the sentence below, it takes four time steps to encode the entire input sequence. At each time step, the encoder "reads" the input word and performs a transformation on its hidden state. Then it passes that hidden state to the next time step. Keep in mind that the hidden state represents the relevant context flowing through the network. The bigger the hidden state, the greater learning capacity of the model, but also the greater computation requirements. We'll talk more about the transformations within the hidden state when we cover gated recurrent units (GRU) and long short-term memory (LSTM).
+
+<img src="images/encoder-decoder-translation.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
+
+_Image credit: modified version from [Udacity](https://classroom.udacity.com/nanodegrees/nd101/parts/4f636f4e-f9e8-4d52-931f-a49a0c26b710/modules/c1558ffb-9afd-48fa-bf12-b8f29dcb18b0/lessons/43ccf91e-7055-4833-8acc-0e2cf77696e8/concepts/f999d8f6-b4c1-4cd0-811e-4767b127ae50)_
+
 ##### &nbsp;
+
+For now, notice that for each time step after the first word in the sequence there are two inputs: the hidden state and a word from the sequence. For the encoder, it's the _next_ word in the input sequence. For the decoder, it's the _previous_ word from the output sequence.
+
+Also, remember that when we say "word" here, we really mean the _vector representation_ of the word which comes from the embedding layer.
+
 ##### &nbsp;
 
 #### Bidirectional Layer
@@ -179,23 +180,16 @@ Training embeddings on a large dataset from scratch requires a huge amount of da
 ##### &nbsp;
 ##### &nbsp;
 
-#### LSTM
-- Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
-
-<img src="images/lstm-gates.png" width="70%" align="center" alt="" title="LSTM cell" />
-
-##### &nbsp;
+#### Gated Recurrent Unit (GRU)
 ##### &nbsp;
 
-#### Attention (not tested)
+<img src="images/gru.png" width="70%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
-<img src="images/attention.png" width="70%" align="center" alt="" title="Encoder Decoder" />
+_Image Credit: [analyticsvidhya.com](https://www.analyticsvidhya.com/blog/2017/12/introduction-to-recurrent-neural-networks/gru/)_
 
 ##### &nbsp;
 ##### &nbsp;
 ##### &nbsp;
-
-
 
 ## Results
 _UNDER CONSTRUCTION: final version coming soon_
@@ -216,6 +210,24 @@ _UNDER CONSTRUCTION: final version coming soon_
 
 ##### &nbsp;
 ##### &nbsp;
+
+
+#### LSTM
+- Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
+
+<img src="images/lstm-gates.png" width="70%" align="center" alt="" title="LSTM cell" />
+
+##### &nbsp;
+##### &nbsp;
+
+#### Attention (not tested)
+
+<img src="images/attention.png" width="70%" align="center" alt="" title="Encoder Decoder" />
+
+##### &nbsp;
+##### &nbsp;
+##### &nbsp;
+
 
 ---
 
