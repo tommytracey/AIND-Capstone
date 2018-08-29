@@ -39,7 +39,7 @@ _Bad translation or extreme carnivorism?_
 ## Approach
 To translate a corpus of English text to French, we need to build a recurrent neural network (RNN). Before diving into the implementation, let's first build some intuition of RNNs and why they're useful for NLP tasks.
 
-#### RNN Overview
+### RNN Overview
 <img src="images/rnn-simple-folded.png" height="20%" align="right" alt="" title="Simple RNN - Folded View" />
 RNNs are designed to take sequences of text as inputs or return sequences of text as outputs, or both. They're called recurrent because, the network's hidden layers have a loop in which the output from one time step becomes an input at the next time step. This recurrence serves as a form of memory. It allows contextual information to flow through the network so that relevant outputs from previous time steps can be applied to network operations at the current time step.
 
@@ -48,7 +48,7 @@ This is analogous to how we read. As you read this post, you're storing importan
 Other types of neural networks can't do this. Imagine you're using a convolutional neural network (CNN) to perform object detection in a movie. Currently, there's no way for information from objects detected in previous scenes to inform the model's detection of objects in the current scene. For example, if a courtroom and judge were detected in a previous scene, that information could help correctly classify the judge's gavel in the current scene (instead of misclassifying it as a hammer or mallet). But CNNs don't allow this type of time-series context to flow through the network like RNNs do.
 
 
-#### RNN Setup
+### RNN Setup
 Depending on the use-case, you'll want to setup your RNN to handle inputs and outputs differently. For this project, we'll use a many-to-many process where the input is a sequence of English words and the output is a sequence of French words (see fourth model from the left in the diagram below).
 
 <img src="images/rnn-sequence-types.png" width="100%" align="top-left" alt="" title="RNN Sequence Types" />
@@ -63,7 +63,7 @@ Depending on the use-case, you'll want to setup your RNN to handle inputs and ou
 
 ##### &nbsp;
 
-#### Building the Pipeline
+### Building the Pipeline
 Below is a summary of the various preprocessing and modeling steps. The high-level steps include:
 
 1. **Preprocessing**: load and examine data, cleaning, tokenization, padding
@@ -73,14 +73,14 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 
 For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
 
-#### Toolset
+### Toolset
 We use Keras for the frontend and TensorFlow for the backend in this project. I prefer using Keras on top of TensorFlow because the syntax is simpler, which makes building the model layers more intuitive. However, there is a trade-off with Keras as you lose the ability to do fine-grained customizations. But this won't affect the models we're building in this project.  
 
 ##### &nbsp;
 
 ## Preprocessing
 
-#### Load & Examine Data
+### Load & Examine Data
 Here is a sample of the data. The inputs are sentences in English; the outputs are the corresponding translations in French.
 
 > <img src="images/training-sample.png" width="100%" align="top-left" alt="" title="Data Sample" />
@@ -91,24 +91,24 @@ When we run a word count, we can see that the vocabulary for the dataset is quit
 
 > <img src="images/vocab.png" width="75%" align="top-left" alt="" title="Word count" />
 
-#### Cleaning
+### Cleaning
 No additional cleaning needs to be done at this point. The data has already been converted to lowercase and split so that there are spaces between all words and punctuation.
 
 _Note:_ For other NLP projects you may need to perform additional steps such as: remove HTML tags, remove stop words, remove punctuation or convert to tag representations, label the parts of speech, or perform entity extraction.  
 
-#### Tokenization
+### Tokenization
 Next we need to tokenize the data&mdash;i.e., convert the text to numerical values. This allows the neural network to perform operations on the input data. For this project, each word and punctuation mark will be given a unique ID. (For other NLP projects, it might make sense to assign each character a unique ID.)
 
 When we run the tokenizer, it creates a word index, which is then used to convert each sentence to a vector.
 
 > <img src="images/tokenizer.png" width="100%" align="top-left" alt="" title="Tokenizer output" />
 
-#### Padding
+### Padding
 When we feed our sequences of word IDs into the model, each sequence needs to be the same length. To achieve this, padding is added to any sequence that is shorter than the max length (i.e. shorter than the longest sentence).
 
 > <img src="images/padding.png" width="50%" align="top-left" alt="" title="Tokenizer output" />
 
-#### One-Hot Encoding (not used)
+### One-Hot Encoding (not used)
 In this project, our input sequences will be a vector containing a series of integers. Each integer represents an English word (as seen above). However, in other projects, sometimes an additional step is performed to convert each integer into a one-hot encoded vector. We don't use one-hot encoding (OHE) in this project, but you'll see references to it in certain diagrams (like the one below). I just didn't want you to get confused.  
 
 <img src="images/RNN-architecture.png" width="40%" align="right" alt="" title="RNN architecture" />
@@ -135,7 +135,7 @@ First, let's breakdown the architecture of a RNN at a high level. Referring to t
 
 ##### &nbsp;
 
-#### Embeddings
+### Embeddings
 Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represent useful relationships, such as gender, verb tense, or even geo-political relationships.
 
 <img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
@@ -144,7 +144,7 @@ Training embeddings on a large dataset from scratch requires a huge amount of da
 
 ##### &nbsp;
 
-#### Encoder & Decoder
+### Encoder & Decoder
 Our sequence-to-sequence model links two recurrent networks: an encoder and a decoder. The encoder summarizes the input into a context variable, also called a state. This context is then decoded and the output sequence is generated.
 
 ##### &nbsp;
@@ -171,7 +171,7 @@ Also, remember that when we say "word" here, we really mean the _vector represen
 
 ##### &nbsp;
 
-#### Bidirectional Layer
+### Bidirectional Layer
 - backward and forward context
 
 <img src="images/bidirectional.png" width="70%" align="center" alt="" title="Bidirectional Layer" />
@@ -180,7 +180,7 @@ Also, remember that when we say "word" here, we really mean the _vector represen
 ##### &nbsp;
 ##### &nbsp;
 
-#### Gated Recurrent Unit (GRU)
+### Gated Recurrent Unit (GRU)
 ##### &nbsp;
 
 <img src="images/gru.png" width="70%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
@@ -212,7 +212,7 @@ _UNDER CONSTRUCTION: final version coming soon_
 ##### &nbsp;
 
 
-#### LSTM
+### LSTM
 - Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
 
 <img src="images/lstm-gates.png" width="70%" align="center" alt="" title="LSTM cell" />
@@ -220,7 +220,7 @@ _UNDER CONSTRUCTION: final version coming soon_
 ##### &nbsp;
 ##### &nbsp;
 
-#### Attention (not tested)
+### Attention (not tested)
 
 <img src="images/attention.png" width="70%" align="center" alt="" title="Encoder Decoder" />
 
