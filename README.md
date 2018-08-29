@@ -123,8 +123,6 @@ And, since we're using embeddings (in the next step) to further encode the word 
 ##### &nbsp;
 
 ## Modeling
-_UNDER CONSTRUCTION: final version coming soon_
-
 First, let's breakdown the architecture of a RNN at a high level. Referring to the diagram above, there are a few parts of the model we to be aware of:
 
 1. **Inputs** &mdash; Input sequences are fed into the model with one word for every time step. Each word in encoded as a unique integer or one-hot encoded vector that maps to the English dataset vocabulary.
@@ -172,15 +170,23 @@ Also, remember that when we say "word" here, we really mean the _vector represen
 ##### &nbsp;
 
 ### Bidirectional Layer
-- backward and forward context
+Now that we understand how context flows through the network via the hidden state, let's take it a step further by allowing that context to flow in both directions. This is what a bidirectional layer does.
+
+<img src="images/yoda.jpg" width="40%" align="right" alt="" title="Yoda" />
+
+In the example above, the encoder only has historical context. But, providing future context can result in better model performance. This may seem counterintuitive to the way humans process language. However, humans often require future context to interpret what is being said. In other words, sometimes we don't understand a sentence until an important piece of content is provided at the end.
+
+To implement this, we train two RNN layers simultaneously. The first layer is fed the input sequence as-is and the second is fed a reversed copy.
 
 <img src="images/bidirectional.png" width="70%" align="center" alt="" title="Bidirectional Layer" />
 
 ##### &nbsp;
-##### &nbsp;
-##### &nbsp;
 
-### Gated Recurrent Unit (GRU)
+### Hidden Layer &mdash; Gated Recurrent Unit (GRU)
+Now let's make our RNN a little bit smarter. Instead of allowing _all_ of the information from the hidden state to flow through the network, what if we could be more selective? Perhaps some of the information is more relevant, while other information should be discarded. This is essentially what a gated recurrent unit (GRU) does.
+
+There are two gates in a GRU: an update gate and reset gate. [This article](https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be) by Simeon Kostadinov, explains these gates in detail. To summarize, the **update gate (z)** helps the model determine how much information from previous time steps needs to be passed along to the future. Meanwhile, the **reset gate (r)** decides how much of the past information to forget.
+
 ##### &nbsp;
 
 <img src="images/gru.png" width="70%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
@@ -188,12 +194,50 @@ Also, remember that when we say "word" here, we really mean the _vector represen
 _Image Credit: [analyticsvidhya.com](https://www.analyticsvidhya.com/blog/2017/12/introduction-to-recurrent-neural-networks/gru/)_
 
 ##### &nbsp;
-##### &nbsp;
+
+### Final Model
+Now that we've discussed the various parts of our model, let's take a look at the code.
+
+```python
+
+def  model_final (input_shape, output_sequence_length, english_vocab_size, french_vocab_size):
+    """
+    Build and train a model that incorporates embedding, encoder-decoder, and bidirectional RNN
+    :param input_shape: Tuple of input shape
+    :param output_sequence_length: Length of output sequence
+    :param english_vocab_size: Number of unique English words in the dataset
+    :param french_vocab_size: Number of unique French words in the dataset
+    :return: Keras model built, but not trained
+    """
+    # Hyperparameters
+    learning_rate = 0.003
+
+    # Build the layers    
+    model = Sequential()
+    # Embedding
+    model.add(Embedding(english_vocab_size, 128, input_length=input_shape[1],
+                         input_shape=input_shape[1:]))
+    # Encoder
+    model.add(Bidirectional(GRU(128)))
+    model.add(RepeatVector(output_sequence_length))
+    # Decoder
+    model.add(Bidirectional(GRU(128, return_sequences=True)))
+    model.add(TimeDistributed(Dense(512, activation='relu')))
+    model.add(Dropout(0.5))
+    model.add(TimeDistributed(Dense(french_vocab_size, activation='softmax')))
+    model.compile(loss=sparse_categorical_crossentropy,
+                  optimizer=Adam(learning_rate),
+                  metrics=['accuracy'])
+    return model
+```
 ##### &nbsp;
 
 ## Results
-_UNDER CONSTRUCTION: final version coming soon_
+The results from the final model can be found in cell 36 of the [iPython Notebook](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb).
 
+Validation accuracy: 97.2%
+
+Training time: 22 epochs
 
 
 ##### &nbsp;
