@@ -71,7 +71,7 @@ Below is a summary of the various preprocessing and modeling steps. The high-lev
 1. **Prediction**: generate specific translations of English to French, and compare the output translations to the ground truth translations
 1. **Iteration**: iterate on the model, experimenting with different architectures
 
-For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb)).
+For a more detailed walkthrough including the source code, check out the Jupyter notebook in the main directory ([machine_translation.ipynb](machine_translation.ipynb)).
 
 ### Toolset
 We use Keras for the frontend and TensorFlow for the backend in this project. I prefer using Keras on top of TensorFlow because the syntax is simpler, which makes building the model layers more intuitive. However, there is a trade-off with Keras as you lose the ability to do fine-grained customizations. But this won't affect the models we're building in this project.  
@@ -196,7 +196,7 @@ _Image Credit: [analyticsvidhya.com](https://www.analyticsvidhya.com/blog/2017/1
 ##### &nbsp;
 
 ### Final Model
-Now that we've discussed the various parts of our model, let's take a look at the code. Again, all of the source code is available [here in the notebook](machine_translation.ipynb/).
+Now that we've discussed the various parts of our model, let's take a look at the code. Again, all of the source code is available [here in the notebook](machine_translation.ipynb).
 
 ```python
 
@@ -233,7 +233,7 @@ def  model_final (input_shape, output_sequence_length, english_vocab_size, frenc
 ##### &nbsp;
 
 ## Results
-The results from the final model can be found in cell 36 of the [iPython Notebook](https://github.com/tommytracey/AIND-Capstone/blob/master/machine_translation.ipynb).
+The results from the final model can be found in cell 36 of the [notebook](machine_translation.ipynb).
 
 Validation accuracy: 97.2%
 
@@ -247,11 +247,12 @@ To be perfectly honest, I cut a few corners in this project given time constrain
 
 1. **Do proper data split (training, validation, test)** &mdash; Currently there is no test set, only training and validation. Obviously this isn't best practice.
 1. **LSTM + attention** &mdash; This has been the de facto architecture for RNNs over the past few years, although there are [some limitations](https://towardsdatascience.com/the-fall-of-rnn-lstm-2d1594c74ce0). I didn't use LSTM because I'd already implemented it in TensorFlow in a another project (found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)), and I wanted to experiment with GRU + Keras for this project.
-1. **Train on larger and more diverse text corpora** &mdash; The text corpus and vocabulary for this project are quite small with little variation in syntax. As a result, the model is quite brittle. To create a model that generalizes better, you'll need to train on a larger dataset with more variability in grammar and sentence structure.  
+1. **Train on a larger and more diverse text corpus** &mdash; The text corpus and vocabulary for this project are quite small with little variation in syntax. As a result, the model is very brittle. To create a model that generalizes better, you'll need to train on a larger dataset with more variability in grammar and sentence structure.  
 1. **Embeddings** &mdash; If you're training on a larger dataset, you should definitely use a pre-trained set of embeddings such as [word2vec](https://mubaris.com/2017/12/14/word2vec/), [GloVe](https://nlp.stanford.edu/projects/glove/), or ELMo.
-1. **Embedding Language Model (ELMo)** &mdash; The new [state-of-the-art in Universal Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a) is ELMo, developed by the [Allen institute for AI](https://allennlp.org/elmo). One of the major advantages of ELMo is that it addresses the problem of polysemy, in which a single word has multiple meanings. ELMo is context-based (not word based), so different meanings for a word occupy different vectors within the embedding space. With GloVe and word2vec, each word has only one representation in the embedding space. For example, the word "queen" could refer to the matriarch of a royal family, a bee, a chess piece, or the 1970s rock band. With traditional embeddings, all of these meanings are associated to a single vector for the word _queen_. With ELMO, these are four distinct vectors, each with a unique set of context words occupying the same space. For example, we'd expect to see words like _queen_, _rook_, and _pawn_ in a similar vector space related to the game of chess. And we'd expect to see _queen_, _hive_, and _honey_ in a different vector space related to bees. This provides a significant boost in semantic encoding.
-1. **Residual layers** &mdash; Add residual layers to a deep LSTM RNN, as described in [this paper](https://arxiv.org/abs/1701.03360). Or, use residual layers as an alternative to LSTM and GRU, as described [here](http://www.mdpi.com/2078-2489/9/3/56/pdf).
+1. **Embedding Language Model (ELMo)** &mdash; The new [state-of-the-art in Universal Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a) is ELMo, developed by the [Allen institute for AI](https://allennlp.org/elmo). One of the major advantages of ELMo is that it addresses the problem of polysemy, in which a single word has multiple meanings. ELMo is context-based (not word-based), so different meanings for a word occupy different vectors within the embedding space. With GloVe and word2vec, each word has only one representation in the embedding space. For example, the word "queen" could refer to the matriarch of a royal family, a bee, a chess piece, or the 1970s rock band. With traditional embeddings, all of these meanings are tied to a single vector for the word _queen_. With ELMO, these are four distinct vectors, each with a unique set of context words occupying the same region of the embedding space. For example, we'd expect to see words like _queen_, _rook_, and _pawn_ in a similar vector space related to the game of chess. And we'd expect to see _queen_, _hive_, and _honey_ in a different vector space related to bees. This provides a significant boost in semantic encoding.
+1. **Residual layers** &mdash; You could add residual layers to a deep LSTM RNN, as described in [this paper](https://arxiv.org/abs/1701.03360). Or, use residual layers as an alternative to LSTM and GRU, as described [here](http://www.mdpi.com/2078-2489/9/3/56/pdf).
 
+Happy coding!
 ##### &nbsp;
 ##### &nbsp;
 
