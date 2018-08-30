@@ -143,7 +143,7 @@ Training embeddings on a large dataset from scratch requires a huge amount of da
 ##### &nbsp;
 
 ### Encoder & Decoder
-Our sequence-to-sequence model links two recurrent networks: an encoder and a decoder. The encoder summarizes the input into a context variable, also called a state. This context is then decoded and the output sequence is generated.
+Our sequence-to-sequence model links two recurrent networks: an encoder and decoder. The encoder summarizes the input into a context variable, also called the state. This context is then decoded and the output sequence is generated.
 
 ##### &nbsp;
 
@@ -155,7 +155,7 @@ _Image credit: [Udacity](https://classroom.udacity.com/nanodegrees/nd101/parts/4
 
 Since both the encoder and decoder are recurrent, they have loops which process each part of the sequence at different time steps. To picture this, it's best to unroll the network so we can see what's happening at each time step.
 
-For the sentence below, it takes four time steps to encode the entire input sequence. At each time step, the encoder "reads" the input word and performs a transformation on its hidden state. Then it passes that hidden state to the next time step. Keep in mind that the hidden state represents the relevant context flowing through the network. The bigger the hidden state, the greater learning capacity of the model, but also the greater computation requirements. We'll talk more about the transformations within the hidden state when we cover gated recurrent units (GRU) and long short-term memory (LSTM).
+In the example below, it takes four time steps to encode the entire input sequence. At each time step, the encoder "reads" the input word and performs a transformation on its hidden state. Then it passes that hidden state to the next time step. Keep in mind that the hidden state represents the relevant context flowing through the network. The bigger the hidden state, the greater the learning capacity of the model, but also the greater the computation requirements. We'll talk more about the transformations within the hidden state when we cover gated recurrent units (GRU).
 
 <img src="images/encoder-decoder-translation.png" width="100%" align="top-left" alt="" title="Encoder Decoder" />
 
@@ -165,7 +165,7 @@ _Image credit: modified version from [Udacity](https://classroom.udacity.com/nan
 
 For now, notice that for each time step after the first word in the sequence there are two inputs: the hidden state and a word from the sequence. For the encoder, it's the _next_ word in the input sequence. For the decoder, it's the _previous_ word from the output sequence.
 
-Also, remember that when we say "word" here, we really mean the _vector representation_ of the word which comes from the embedding layer.
+Also, remember that when we refer to a "word," we really mean the _vector representation_ of the word which comes from the embedding layer.
 
 ##### &nbsp;
 
@@ -174,7 +174,7 @@ Now that we understand how context flows through the network via the hidden stat
 
 <img src="images/yoda.jpg" width="40%" align="right" alt="" title="Yoda" />
 
-In the example above, the encoder only has historical context. But, providing future context can result in better model performance. This may seem counterintuitive to the way humans process language. However, humans often require future context to interpret what is being said. In other words, sometimes we don't understand a sentence until an important piece of content is provided at the end.
+In the example above, the encoder only has historical context. But, providing future context can result in better model performance. This may seem counterintuitive to the way humans process language, since we only read in one direction. However, humans often require future context to interpret what is being said. In other words, sometimes we don't understand a sentence until an important word or phrase is provided at the end. Happens this does whenever Yoda speaks. :expressionless: :pray:
 
 To implement this, we train two RNN layers simultaneously. The first layer is fed the input sequence as-is and the second is fed a reversed copy.
 
@@ -185,7 +185,7 @@ To implement this, we train two RNN layers simultaneously. The first layer is fe
 ### Hidden Layer &mdash; Gated Recurrent Unit (GRU)
 Now let's make our RNN a little bit smarter. Instead of allowing _all_ of the information from the hidden state to flow through the network, what if we could be more selective? Perhaps some of the information is more relevant, while other information should be discarded. This is essentially what a gated recurrent unit (GRU) does.
 
-There are two gates in a GRU: an update gate and reset gate. [This article](https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be) by Simeon Kostadinov, explains these gates in detail. To summarize, the **update gate (z)** helps the model determine how much information from previous time steps needs to be passed along to the future. Meanwhile, the **reset gate (r)** decides how much of the past information to forget.
+There are two gates in a GRU: an update gate and reset gate. [This article](https://towardsdatascience.com/understanding-gru-networks-2ef37df6c9be) by Simeon Kostadinov, explains these in detail. To summarize, the **update gate (z)** helps the model determine how much information from previous time steps needs to be passed along to the future. Meanwhile, the **reset gate (r)** decides how much of the past information to forget.
 
 ##### &nbsp;
 
@@ -196,7 +196,7 @@ _Image Credit: [analyticsvidhya.com](https://www.analyticsvidhya.com/blog/2017/1
 ##### &nbsp;
 
 ### Final Model
-Now that we've discussed the various parts of our model, let's take a look at the code.
+Now that we've discussed the various parts of our model, let's take a look at the code. Again, all of the source code is available [here in the notebook](machine_translation.ipynb/).
 
 ```python
 
