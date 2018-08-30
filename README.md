@@ -243,35 +243,17 @@ Training time: 22 epochs
 ##### &nbsp;
 
 ## Future Improvements
-_UNDER CONSTRUCTION: final version coming soon_
+To be perfectly honest, I cut a few corners in this project given time constraints. If I were to expand on it in the future, here's where I'd start.
 
-- do proper data split (train, validation, test)
-- LSTM + attention
-- Residual layers (Google paper)
-- Embedding Language Model (ELMo)
-- Transformer model
-- train on different text corpuses
-
-##### &nbsp;
-##### &nbsp;
-
-
-### LSTM
-- Not tested in this project, but done is separate Udacity project found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)
-
-<img src="images/lstm-gates.png" width="70%" align="center" alt="" title="LSTM cell" />
+1. **Do proper data split (training, validation, test)** &mdash; Currently there is no test set, only training and validation. Obviously this isn't best practice.
+1. **LSTM + attention** &mdash; This has been the de facto architecture for RNNs over the past few years, although there are [some limitations](https://towardsdatascience.com/the-fall-of-rnn-lstm-2d1594c74ce0). I didn't use LSTM because I'd already implemented it in TensorFlow in a another project (found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)), and I wanted to experiment with GRU + Keras for this project.
+1. **Train on larger and more diverse text corpora** &mdash; The text corpus and vocabulary for this project are quite small with little variation in syntax. As a result, the model is quite brittle. To create a model that generalizes better, you'll need to train on a larger dataset with more variability in grammar and sentence structure.  
+1. **Embeddings** &mdash; If you're training on a larger dataset, you should definitely use a pre-trained set of embeddings such as [word2vec](https://mubaris.com/2017/12/14/word2vec/), [GloVe](https://nlp.stanford.edu/projects/glove/), or ELMo.
+1. **Embedding Language Model (ELMo)** &mdash; The new [state-of-the-art in Universal Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a) is ELMo, developed by the [Allen institute for AI](https://allennlp.org/elmo). One of the major advantages of ELMo is that it addresses the problem of polysemy, in which a single word has multiple meanings. ELMo is context-based (not word based), so different meanings for a word occupy different vectors within the embedding space. With GloVe and word2vec, each word has only one representation in the embedding space. For example, the word "queen" could refer to the matriarch of a royal family, a bee, a chess piece, or the 1970s rock band. With traditional embeddings, all of these meanings are associated to a single vector for the word _queen_. With ELMO, these are four distinct vectors, each with a unique set of context words occupying the same space. For example, we'd expect to see words like _queen_, _rook_, and _pawn_ in a similar vector space related to the game of chess. And we'd expect to see _queen_, _hive_, and _honey_ in a different vector space related to bees. This provides a significant boost in semantic encoding.
+1. **Residual layers** &mdash; Add residual layers to a deep LSTM RNN, as described in [this paper](https://arxiv.org/abs/1701.03360). Or, use residual layers as an alternative to LSTM and GRU, as described [here](http://www.mdpi.com/2078-2489/9/3/56/pdf).
 
 ##### &nbsp;
 ##### &nbsp;
-
-### Attention (not tested)
-
-<img src="images/attention.png" width="70%" align="center" alt="" title="Encoder Decoder" />
-
-##### &nbsp;
-##### &nbsp;
-##### &nbsp;
-
 
 ---
 
