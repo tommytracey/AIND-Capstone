@@ -233,11 +233,11 @@ def  model_final (input_shape, output_sequence_length, english_vocab_size, frenc
 ##### &nbsp;
 
 ## Results
-The results from the final model can be found in cell 36 of the [notebook](machine_translation.ipynb).
+The results from the final model can be found in cell 20 of the [notebook](machine_translation.ipynb).
 
-Validation accuracy: 97.2%
+Validation accuracy: 97.5%
 
-Training time: 22 epochs
+Training time: 23 epochs
 
 
 ##### &nbsp;
