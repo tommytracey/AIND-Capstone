@@ -262,7 +262,7 @@ Happy coding!
 In case you want to run this project yourself, below is the project starter code.
 
 ## Setup
-The original Udacity repo for this project can be found [here]().
+The original Udacity repo for this project can be found [here](https://github.com/udacity/aind2-nlp-capstone).
 
 This project requires GPU acceleration to run efficiently. Support is available to use either of the following two methods for accessing GPU-enabled cloud computing resources.
 
