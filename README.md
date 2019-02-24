@@ -41,7 +41,7 @@ To translate a corpus of English text to French, we need to build a recurrent ne
 
 ### RNN Overview
 <img src="images/rnn-simple-folded.png" height="20%" align="right" alt="" title="Simple RNN - Folded View" />
-RNNs are designed to take sequences of text as inputs or return sequences of text as outputs, or both. They're called recurrent because, the network's hidden layers have a loop in which the output from one time step becomes an input at the next time step. This recurrence serves as a form of memory. It allows contextual information to flow through the network so that relevant outputs from previous time steps can be applied to network operations at the current time step.
+RNNs are designed to take sequences of text as inputs or return sequences of text as outputs, or both. They're called recurrent because the network's hidden layers have a loop in which the output from one time step becomes an input at the next time step. This recurrence serves as a form of memory. It allows contextual information to flow through the network so that relevant outputs from previous time steps can be applied to network operations at the current time step.
 
 This is analogous to how we read. As you read this post, you're storing important pieces of information from previous words and sentences and using it as context to understand each new word and sentence.
 
@@ -125,7 +125,7 @@ And, since we're using embeddings (in the next step) to further encode the word 
 ## Modeling
 First, let's breakdown the architecture of a RNN at a high level. Referring to the diagram above, there are a few parts of the model we to be aware of:
 
-1. **Inputs** &mdash; Input sequences are fed into the model with one word for every time step. Each word in encoded as a unique integer or one-hot encoded vector that maps to the English dataset vocabulary.
+1. **Inputs** &mdash; Input sequences are fed into the model with one word for every time step. Each word is encoded as a unique integer or one-hot encoded vector that maps to the English dataset vocabulary.
 1. **Embedding Layers** &mdash; Embeddings are used to convert each word to a vector. The size of the vector depends on the complexity of the vocabulary.
 1. **Recurrent Layers (Encoder)** &mdash; This is where the context from word vectors in previous time steps is applied to the current word vector.
 1. **Dense Layers (Decoder)** &mdash; These are typical fully connected layers used to decode the encoded input into the correct translation sequence.
@@ -134,7 +134,7 @@ First, let's breakdown the architecture of a RNN at a high level. Referring to t
 ##### &nbsp;
 
 ### Embeddings
-Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into a n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represent useful relationships, such as gender, verb tense, or even geo-political relationships.
+Embeddings allow us to capture more precise syntactic and semantic word relationships. This is achieved by projecting each word into n-dimensional space. Words with similar meanings occupy similar regions of this space; the closer two words are, the more similar they are. And often the vectors between words represent useful relationships, such as gender, verb tense, or even geopolitical relationships.
 
 <img src="images/embedding-words.png" width="100%" align-center="true" alt="" title="Gated Recurrent Unit (GRU)" />
 
@@ -243,16 +243,21 @@ Training time: 23 epochs
 ##### &nbsp;
 
 ## Future Improvements
-To be perfectly honest, I cut a few corners in this project given time constraints. If I were to expand on it in the future, here's where I'd start.
+If I were to expand on it in the future, here's where I'd start.
 
-1. **Do proper data split (training, validation, test)** &mdash; Currently there is no test set, only training and validation. Obviously this isn't best practice.
-1. **LSTM + attention** &mdash; This has been the de facto architecture for RNNs over the past few years, although there are [some limitations](https://towardsdatascience.com/the-fall-of-rnn-lstm-2d1594c74ce0). I didn't use LSTM because I'd already implemented it in TensorFlow in a another project (found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)), and I wanted to experiment with GRU + Keras for this project.
+1. **Do proper data split (training, validation, test)** &mdash; Currently there is no test set, only training and validation. Obviously this doesn't follow best practices.
+1. **LSTM + attention** &mdash; This has been the de facto architecture for RNNs over the past few years, although there are [some limitations](https://towardsdatascience.com/the-fall-of-rnn-lstm-2d1594c74ce0). I didn't use LSTM because I'd already implemented it in TensorFlow in another project (found [here](https://github.com/tommytracey/udacity/tree/master/deep-learning-nano/projects/4-language-translation#build-the-neural-network)), and I wanted to experiment with GRU + Keras for this project.
 1. **Train on a larger and more diverse text corpus** &mdash; The text corpus and vocabulary for this project are quite small with little variation in syntax. As a result, the model is very brittle. To create a model that generalizes better, you'll need to train on a larger dataset with more variability in grammar and sentence structure.  
-1. **Embeddings** &mdash; If you're training on a larger dataset, you should definitely use a pre-trained set of embeddings such as [word2vec](https://mubaris.com/2017/12/14/word2vec/), [GloVe](https://nlp.stanford.edu/projects/glove/), or ELMo.
-1. **Embedding Language Model (ELMo)** &mdash; The new [state-of-the-art in Universal Embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a) is ELMo, developed by the [Allen institute for AI](https://allennlp.org/elmo). One of the major advantages of ELMo is that it addresses the problem of polysemy, in which a single word has multiple meanings. ELMo is context-based (not word-based), so different meanings for a word occupy different vectors within the embedding space. With GloVe and word2vec, each word has only one representation in the embedding space. For example, the word "queen" could refer to the matriarch of a royal family, a bee, a chess piece, or the 1970s rock band. With traditional embeddings, all of these meanings are tied to a single vector for the word _queen_. With ELMO, these are four distinct vectors, each with a unique set of context words occupying the same region of the embedding space. For example, we'd expect to see words like _queen_, _rook_, and _pawn_ in a similar vector space related to the game of chess. And we'd expect to see _queen_, _hive_, and _honey_ in a different vector space related to bees. This provides a significant boost in semantic encoding.
 1. **Residual layers** &mdash; You could add residual layers to a deep LSTM RNN, as described in [this paper](https://arxiv.org/abs/1701.03360). Or, use residual layers as an alternative to LSTM and GRU, as described [here](http://www.mdpi.com/2078-2489/9/3/56/pdf).
+1. **Embeddings** &mdash; If you're training on a larger dataset, you should definitely use a pre-trained set of embeddings such as [word2vec](https://mubaris.com/2017/12/14/word2vec/) or [GloVe](https://nlp.stanford.edu/projects/glove/). Even better, use ELMo or BERT.
+ - **Embedding Language Model (ELMo)** &mdash; One of the biggest advances in [universal embeddings](https://medium.com/huggingface/universal-word-sentence-embeddings-ce48ddc8fc3a) in 2018 was ELMo, developed by the [Allen Institute for AI](https://allennlp.org). One of the major advantages of ELMo is that it addresses the problem of polysemy, in which a single word has multiple meanings. ELMo is context-based (not word-based), so different meanings for a word occupy different vectors within the embedding space. With GloVe and word2vec, each word has only one representation in the embedding space. For example, the word "queen" could refer to the matriarch of a royal family, a bee, a chess piece, or the 1970s rock band. With traditional embeddings, all of these meanings are tied to a single vector for the word _queen_. With ELMO, these are four distinct vectors, each with a unique set of context words occupying the same region of the embedding space. For example, we'd expect to see words like _queen_, _rook_, and _pawn_ in a similar vector space related to the game of chess. And we'd expect to see _queen_, _hive_, and _honey_ in a different vector space related to bees. This provides a significant boost in semantic encoding.
+ - **Bidirectional Encoder Representations from [Transformers](https://ai.googleblog.com/2017/08/transformer-novel-neural-network.html) (BERT)**. So far in 2019, the biggest advancement in bidirectional embeddings has been [BERT](https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html), which was open-sourced by Google. How is BERT different?
+> Context-free models such as word2vec or GloVe generate a single word embedding representation for each word in the vocabulary. For example, the word “bank” would have the same context-free representation in “bank account” and “bank of the river.” Contextual models instead generate a representation of each word that is based on the other words in the sentence. For example, in the sentence “I accessed the bank account,” a unidirectional contextual model would represent “bank” based on “I accessed the” but not “account.” However, BERT represents “bank” using both its previous and next context — “I accessed the ... account” — starting from the very bottom of a deep neural network, making it deeply bidirectional.
+> &mdash;Jacob Devlin and Ming-Wei Chang, [Google AI Blog](https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html)
 
-Happy coding!
+
+
+I hope you found this useful. Happy building!
 ##### &nbsp;
 ##### &nbsp;
 
