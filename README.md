@@ -255,10 +255,18 @@ If I were to expand on it in the future, here's where I'd start.
 > Context-free models such as word2vec or GloVe generate a single word embedding representation for each word in the vocabulary. For example, the word “bank” would have the same context-free representation in “bank account” and “bank of the river.” Contextual models instead generate a representation of each word that is based on the other words in the sentence. For example, in the sentence “I accessed the bank account,” a unidirectional contextual model would represent “bank” based on “I accessed the” but not “account.” However, BERT represents “bank” using both its previous and next context — “I accessed the ... account” — starting from the very bottom of a deep neural network, making it deeply bidirectional.
 > &mdash;Jacob Devlin and Ming-Wei Chang, [Google AI Blog](https://ai.googleblog.com/2018/11/open-sourcing-bert-state-of-art-pre.html)
 
-
-
-I hope you found this useful. Happy building!
 ##### &nbsp;
+
+### Closing
+I hope you found this useful. If you have any feedback, I’d love to hear it. Feel free to post in the comments.
+
+### Contact
+If you’d like to inquire about collaboration or career opportunities you can find me [here on LinkedIn](https://www.linkedin.com/in/thomastracey/) or view [my portfolio here](https://ttracey.com/).
+
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+
+<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="thomastracey"><a class="LI-simple-link" href='https://www.linkedin.com/in/thomastracey?trk=profile-badge'>Thomas Tracey</a></div>
+
 ##### &nbsp;
 
 ---
