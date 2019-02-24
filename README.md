@@ -257,15 +257,10 @@ If I were to expand on it in the future, here's where I'd start.
 
 ##### &nbsp;
 
-### Closing
+### Contact
 I hope you found this useful. If you have any feedback, I’d love to hear it. Feel free to post in the comments.
 
-### Contact
 If you’d like to inquire about collaboration or career opportunities you can find me [here on LinkedIn](https://www.linkedin.com/in/thomastracey/) or view [my portfolio here](https://ttracey.com/).
-
-<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
-
-<div class="LI-profile-badge"  data-version="v1" data-size="medium" data-locale="en_US" data-type="horizontal" data-theme="light" data-vanity="thomastracey"><a class="LI-simple-link" href='https://www.linkedin.com/in/thomastracey?trk=profile-badge'>Thomas Tracey</a></div>
 
 ##### &nbsp;
 
